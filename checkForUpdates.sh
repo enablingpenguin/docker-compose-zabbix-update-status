@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#CHANGEME!!!
-$ZABBIX_SERVER = zabbix.server.local
+#CHANGEME
+ZBX_SERVER_HOST=zabbix.server.local
 
 # Pull the latest images for all services in the docker-compose.yml file
 docker-compose pull > /dev/null 2>&1
@@ -47,7 +47,7 @@ ZBX_HOSTNAME=$(docker exec zabbix-agent /bin/sh -c 'echo $ZBX_HOSTNAME')
 
 # Send appropriate status to Zabbix
 if [[ $containers_with_update -gt 0 ]]; then
-  docker exec -d zabbix-agent /bin/sh -c "/usr/bin/zabbix_sender -z $ZABBIX_SERVER -s $ZBX_HOSTNAME -k container.updatecount -o $containers_with_update"
+  docker exec -d zabbix-agent /bin/sh -c "/usr/bin/zabbix_sender -z $ZBX_SERVER_HOST -s $ZBX_HOSTNAME -k container.updatecount -o $containers_with_update"
 else
-  docker exec -d zabbix-agent /bin/sh -c '/usr/bin/zabbix_sender -z $ZABBIX_SERVER -s $ZBX_HOSTNAME -k container.updatecount -o 0'
+  docker exec -d zabbix-agent /bin/sh -c '/usr/bin/zabbix_sender -z $ZBX_SERVER_HOST -s $ZBX_HOSTNAME -k container.updatecount -o 0'
 fi
