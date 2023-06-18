@@ -1,0 +1,28 @@
+zabbix_export:
+  version: '6.0'
+  date: '2023-06-18T16:03:05Z'
+  groups:
+    -
+      uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    -
+      uuid: 6cae8275237b4da7b30cc2c6a4904295
+      template: 'Docker Container Updates'
+      name: 'Docker Container Updates'
+      groups:
+        -
+          name: Templates
+      items:
+        -
+          uuid: b9f15caca76d4fecb845b1a77d7eb750
+          name: 'Containers Update Count'
+          type: TRAP
+          key: container.updatecount
+          delay: '0'
+          triggers:
+            -
+              uuid: 8f88742c11ac4e6a857a05b6c4d6a2c2
+              expression: 'last(/Docker Container Updates/container.updatecount)>0'
+              name: 'Container Updates Available'
+              priority: WARNING
